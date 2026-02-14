@@ -5,96 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>For Nama ❤️</title>
     <style>
-        :root {
-            --primary-red: #ff4d6d;
-            --soft-pink: #fff0f3;
-        }
-
-        body {
-            background-color: var(--soft-pink);
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            text-align: center;
-        }
-
-        #main-card {
-            background: white;
-            padding: 30px;
-            width: 85%;
-            max-width: 350px;
-            border-radius: 25px;
-            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2);
-            z-index: 100;
-        }
-
+        :root { --primary-red: #ff4d6d; --soft-pink: #fff0f3; }
+        body { background-color: var(--soft-pink); font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; text-align: center; }
+        
+        #main-card { background: white; padding: 30px; width: 85%; max-width: 350px; border-radius: 25px; box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2); z-index: 100; }
         h1 { color: var(--primary-red); margin-top: 0; }
-        .btn-yes {
-            background: var(--primary-red);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 15px;
-        }
+        .btn-yes { background: var(--primary-red); color: white; border: none; padding: 15px 40px; font-size: 1.2rem; border-radius: 50px; cursor: pointer; width: 100%; margin-top: 15px; }
 
-        #stage {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
+        #stage { display: none; flex-direction: column; align-items: center; width: 100%; }
+        
+        .heart-wrapper { 
+            position: relative; 
+            width: 280px; 
+            height: 280px; 
+            margin-bottom: -30px; 
+            opacity: 0; 
+            transform: scale(0.5); 
+            transition: all 0.8s ease; 
+            animation: float 3s ease-in-out infinite; 
         }
-
-        .heart-wrapper {
-            position: relative;
-            width: 280px;
-            height: 280px;
-            margin-bottom: -30px;
-            opacity: 0;
-            transform: scale(0.5);
-            transition: all 0.8s ease;
-            animation: float 3s ease-in-out infinite;
+        
+        @keyframes float { 
+            0%, 100% { transform: translateY(0) scale(1); } 
+            50% { transform: translateY(-20px) scale(1.05); } 
         }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-20px) scale(1.05); }
-        }
-
+        
         .visible { opacity: 1; transform: scale(1); }
-
         .heart-svg-container { width: 100%; height: 100%; }
         .heart-border { fill: var(--primary-red); }
         .heart-bg { fill: white; }
 
-        #success-msg {
-            font-size: 1.8rem;
-            color: var(--primary-red);
-            font-weight: bold;
-            opacity: 0;
-            margin-top: 40px;
-            transition: opacity 1s;
-        }
-
-        .falling-heart {
-            position: fixed;
-            top: -10%;
-            color: var(--primary-red);
-            z-index: 1;
-            animation: fall linear forwards;
-        }
-
+        #success-msg { font-size: 1.8rem; color: var(--primary-red); font-weight: bold; opacity: 0; margin-top: 40px; transition: opacity 1s; }
+        
+        .falling-heart { position: fixed; top: -10%; color: var(--primary-red); z-index: 1; animation: fall linear forwards; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-
-        /* Hidden player for mobile compatibility */
-        #video-holder { position: absolute; top: -1000px; left: -1000px; opacity: 0; pointer-events: none; }
+        
+        #video-holder { position: absolute; top: -1000px; left: -1000px; }
     </style>
 </head>
 <body>
@@ -109,8 +55,8 @@
 
     <div id="main-card">
         <h1>Hi Nama! ❤️</h1>
-        <p>I know you are my valentine.<br>Do you wana come on a date with me?</p>
-        <button class="btn-yes" onclick="initMusic()">Yes, I'd Love To!</button>
+        <p>I know you are my valentine.<br>Turn up the volume and click below!</p>
+        <button class="btn-yes" onclick="startEverything()">Yes, I'd Love To!</button>
     </div>
 
     <div id="stage">
@@ -123,91 +69,9 @@
                 </foreignObject>
             </svg>
         </div>
-
         <div id="box2" class="heart-wrapper" style="display:none;">
             <svg class="heart-svg-container" viewBox="0 0 100 100">
                 <path class="heart-border" d="M50,20 C33,-10 0,0 0,35 C0,60 50,100 50,100 C50,100 100,60 100,35 C100,0 67,-10 50,20" />
                 <path class="heart-bg" d="M50,23 C35,-5 5,5 5,35 C5,55 50,90 50,90 C50,90 95,55 95,35 C95,5 65,-5 50,23" />
                 <foreignObject x="8" y="8" width="84" height="84" clip-path="url(#heartClip)">
-                    <img src="image2.jpg" style="width:100%; height:100%; object-fit:contain;">
-                </foreignObject>
-            </svg>
-        </div>
-        <div id="success-msg">DATE SUCCESSFUL! ✨</div>
-    </div>
-
-    <div id="video-holder"><div id="player"></div></div>
-
-    <script src="https://www.youtube.com/iframe_api"></script>
-
-    <script>
-        let player;
-        const videoId = 'R6KvmB3XI-E';
-
-        // Load the player in a ready state (but paused)
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('player', {
-                height: '0',
-                width: '0',
-                videoId: videoId,
-                playerVars: {
-                    'autoplay': 0,
-                    'start': 44,
-                    'controls': 0,
-                    'modestbranding': 1,
-                    'playsinline': 1 // Essential for iOS/Mobile
-                },
-                events: {
-                    'onReady': onPlayerReady
-                }
-            });
-        }
-
-        function onPlayerReady(event) {
-            console.log("YouTube Player is ready");
-        }
-
-        function initMusic() {
-            // Mobile bypass: User gesture (click) now triggers play() directly via API
-            if (player && player.playVideo) {
-                player.playVideo();
-                player.unMute(); // Force sound
-            }
-
-            document.getElementById('main-card').style.display = 'none';
-            document.getElementById('stage').style.display = 'flex';
-
-            // Show Box 1
-            setTimeout(() => {
-                document.getElementById('box1').classList.add('visible');
-            }, 500);
-
-            // Show Box 2
-            setTimeout(() => {
-                const box2 = document.getElementById('box2');
-                box2.style.display = 'block';
-                setTimeout(() => {
-                    box2.classList.add('visible');
-                    setTimeout(() => {
-                        document.getElementById('success-msg').style.opacity = '1';
-                        startFallingHearts();
-                    }, 1000);
-                }, 100);
-            }, 5500);
-        }
-
-        function startFallingHearts() {
-            setInterval(() => {
-                const heart = document.createElement('div');
-                heart.innerHTML = '❤️';
-                heart.className = 'falling-heart';
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
-                heart.style.animationDuration = (Math.random() * 3 + 2) + 's';
-                document.body.appendChild(heart);
-                setTimeout(() => heart.remove(), 5000);
-            }, 400);
-        }
-    </script>
-</body>
-</html>
+                    <img src="image2
