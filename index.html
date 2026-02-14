@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,40 +6,38 @@
     <title>For Nama ❤️</title>
     <style>
         :root { --primary-red: #ff4d6d; --soft-pink: #fff0f3; }
-        body { background-color: var(--soft-pink); font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; text-align: center; }
+        body { background-color: var(--soft-pink); font-family: 'Arial', sans-serif; margin: 0; height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; text-align: center; }
         
+        /* Initial Card */
         #main-card { background: white; padding: 30px; width: 85%; max-width: 350px; border-radius: 25px; box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2); z-index: 100; }
-        h1 { color: var(--primary-red); margin-top: 0; }
+        h1 { color: var(--primary-red); }
         .btn-yes { background: var(--primary-red); color: white; border: none; padding: 15px 40px; font-size: 1.2rem; border-radius: 50px; cursor: pointer; width: 100%; margin-top: 15px; }
 
+        /* Animation Stage */
         #stage { display: none; flex-direction: column; align-items: center; width: 100%; }
         
         .heart-wrapper { 
-            position: relative; 
-            width: 280px; 
-            height: 280px; 
-            margin-bottom: -30px; 
-            opacity: 0; 
-            transform: scale(0.5); 
-            transition: all 0.8s ease; 
-            animation: float 3s ease-in-out infinite; 
+            position: relative; width: 250px; height: 250px; margin-bottom: -20px; 
+            opacity: 0; transform: scale(0.5); transition: all 0.8s ease;
+            animation: float 3s ease-in-out infinite;
         }
         
         @keyframes float { 
-            0%, 100% { transform: translateY(0) scale(1); } 
-            50% { transform: translateY(-20px) scale(1.05); } 
+            0%, 100% { transform: translateY(0); } 
+            50% { transform: translateY(-15px); } 
         }
         
-        .visible { opacity: 1 !important; transform: scale(1) !important; }
+        .visible { opacity: 1; transform: scale(1); }
         .heart-svg-container { width: 100%; height: 100%; }
         .heart-border { fill: var(--primary-red); }
         .heart-bg { fill: white; }
 
-        #success-msg { font-size: 1.8rem; color: var(--primary-red); font-weight: bold; opacity: 0; margin-top: 40px; transition: opacity 1s; }
+        #success-msg { font-size: 1.8rem; color: var(--primary-red); font-weight: bold; opacity: 0; margin-top: 20px; transition: opacity 1s; }
         .falling-heart { position: fixed; top: -10%; color: var(--primary-red); z-index: 1; animation: fall linear forwards; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
         
-        #video-holder { position: absolute; top: -1000px; left: -1000px; visibility: hidden; }
+        /* YouTube Player Hidden */
+        #video-holder { position: absolute; top: -1000px; left: -1000px; }
     </style>
 </head>
 <body>
@@ -69,6 +66,7 @@
                 </foreignObject>
             </svg>
         </div>
+
         <div id="box2" class="heart-wrapper" style="display:none;">
             <svg class="heart-svg-container" viewBox="0 0 100 100">
                 <path class="heart-border" d="M50,20 C33,-10 0,0 0,35 C0,60 50,100 50,100 C50,100 100,60 100,35 C100,0 67,-10 50,20" />
@@ -78,6 +76,7 @@
                 </foreignObject>
             </svg>
         </div>
+
         <div id="success-msg">DATE SUCCESSFUL! ✨</div>
     </div>
 
@@ -85,34 +84,37 @@
 
     <script>
         function startEverything() {
-            // 1. Hide card, show stage
-            document.getElementById('main-card').style.display = 'none';
-            document.getElementById('stage').style.display = 'flex';
-
-            // 2. Play music
+            // 1. Play Music Immediately
             const videoId = 'R6KvmB3XI-E';
             document.getElementById('video-holder').innerHTML = 
                 `<iframe width="100" height="100" src="https://www.youtube.com/embed/${videoId}?autoplay=1&start=44&playsinline=1" allow="autoplay"></iframe>`;
 
-            // 3. Show Hearts
+            // 2. Hide Card and Show Animation Stage
+            document.getElementById('main-card').style.display = 'none';
+            document.getElementById('stage').style.display = 'flex';
+
+            // 3. Sequential Reveal
+            // Show first heart after 0.5s
             setTimeout(() => { 
                 document.getElementById('box1').classList.add('visible'); 
-            }, 300);
+            }, 500);
 
+            // Show second heart after 4s
             setTimeout(() => {
                 const b2 = document.getElementById('box2');
                 b2.style.display = 'block';
                 setTimeout(() => {
                     b2.classList.add('visible');
+                    // Show success message and confetti after another 1s
                     setTimeout(() => {
                         document.getElementById('success-msg').style.opacity = '1';
-                        startFallingHearts();
+                        startConfetti();
                     }, 1000);
                 }, 100);
-            }, 5000);
+            }, 4500);
         }
 
-        function startFallingHearts() {
+        function startConfetti() {
             setInterval(() => {
                 const h = document.createElement('div');
                 h.innerHTML = '❤️'; h.className = 'falling-heart';
@@ -121,9 +123,8 @@
                 h.style.animationDuration = (Math.random() * 3 + 2) + 's';
                 document.body.appendChild(h);
                 setTimeout(() => h.remove(), 5000);
-            }, 400);
+            }, 300);
         }
     </script>
 </body>
 </html>
-
