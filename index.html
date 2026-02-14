@@ -7,20 +7,40 @@
     <style>
         :root { --primary-red: #ff4d6d; --soft-pink: #fff0f3; }
         body { background-color: var(--soft-pink); font-family: 'Helvetica Neue', Arial, sans-serif; margin: 0; height: 100vh; display: flex; justify-content: center; align-items: center; overflow: hidden; text-align: center; }
+        
         #main-card { background: white; padding: 30px; width: 85%; max-width: 350px; border-radius: 25px; box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2); z-index: 100; }
         h1 { color: var(--primary-red); margin-top: 0; }
         .btn-yes { background: var(--primary-red); color: white; border: none; padding: 15px 40px; font-size: 1.2rem; border-radius: 50px; cursor: pointer; width: 100%; margin-top: 15px; }
+
         #stage { display: none; flex-direction: column; align-items: center; width: 100%; }
-        .heart-wrapper { position: relative; width: 280px; height: 280px; margin-bottom: -30px; opacity: 0; transform: scale(0.5); transition: all 0.8s ease; animation: float 3s ease-in-out infinite; }
-        @keyframes float { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-20px) scale(1.05); } }
+        
+        .heart-wrapper { 
+            position: relative; 
+            width: 280px; 
+            height: 280px; 
+            margin-bottom: -30px; 
+            opacity: 0; 
+            transform: scale(0.5); 
+            transition: all 0.8s ease; 
+            animation: float 3s ease-in-out infinite; 
+        }
+        
+        @keyframes float { 
+            0%, 100% { transform: translateY(0) scale(1); } 
+            50% { transform: translateY(-20px) scale(1.05); } 
+        }
+        
         .visible { opacity: 1; transform: scale(1); }
         .heart-svg-container { width: 100%; height: 100%; }
         .heart-border { fill: var(--primary-red); }
         .heart-bg { fill: white; }
+
         #success-msg { font-size: 1.8rem; color: var(--primary-red); font-weight: bold; opacity: 0; margin-top: 40px; transition: opacity 1s; }
+        
         .falling-heart { position: fixed; top: -10%; color: var(--primary-red); z-index: 1; animation: fall linear forwards; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-        #video-holder { position: absolute; top: -1000px; left: -1000px; }
+        
+        #video-holder { position: absolute; top: -1000px; left: -1000px; pointer-events: none; }
     </style>
 </head>
 <body>
@@ -35,7 +55,7 @@
 
     <div id="main-card">
         <h1>Hi Nama! ❤️</h1>
-        <p>I know you are my valentine.<br>Turn up the volume and click below!</p>
+        <p>I know you are my valentine.<br>I have a surprise for you!</p>
         <button class="btn-yes" onclick="startEverything()">Yes, I'd Love To!</button>
     </div>
 
@@ -61,31 +81,24 @@
         <div id="success-msg">DATE SUCCESSFUL! ✨</div>
     </div>
 
-    <div id="video-holder"><div id="player"></div></div>
+    <div id="video-holder"></div>
 
-    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
-        let player;
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('player', {
-                height: '0', width: '0', videoId: 'R6KvmB3XI-E',
-                playerVars: { 'autoplay': 1, 'start': 44, 'playsinline': 1, 'controls': 0 },
-                events: { 'onReady': (e) => { e.target.mute(); e.target.playVideo(); } }
-            });
-        }
-
         function startEverything() {
-            // Unmute and seek to 44s immediately on click
-            if (player) {
-                player.unMute();
-                player.seekTo(44);
-                player.playVideo();
-            }
-            
+            // 1. Play Song (Direct Method)
+            const videoId = 'R6KvmB3XI-E';
+            const videoHolder = document.getElementById('video-holder');
+            videoHolder.innerHTML = `<iframe width="100" height="100" src="https://www.youtube.com/embed/${videoId}?autoplay=1&start=44&playsinline=1" allow="autoplay"></iframe>`;
+
+            // 2. Immediate UI Switch
             document.getElementById('main-card').style.display = 'none';
             document.getElementById('stage').style.display = 'flex';
 
-            setTimeout(() => { document.getElementById('box1').classList.add('visible'); }, 500);
+            // 3. Animation Sequence
+            setTimeout(() => { 
+                document.getElementById('box1').classList.add('visible'); 
+            }, 500);
+
             setTimeout(() => {
                 const b2 = document.getElementById('box2');
                 b2.style.display = 'block';
@@ -113,3 +126,7 @@
     </script>
 </body>
 </html>
+    </script>
+</body>
+</html>
+
