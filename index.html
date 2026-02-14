@@ -30,17 +30,16 @@
             50% { transform: translateY(-20px) scale(1.05); } 
         }
         
-        .visible { opacity: 1; transform: scale(1); }
+        .visible { opacity: 1 !important; transform: scale(1) !important; }
         .heart-svg-container { width: 100%; height: 100%; }
         .heart-border { fill: var(--primary-red); }
         .heart-bg { fill: white; }
 
         #success-msg { font-size: 1.8rem; color: var(--primary-red); font-weight: bold; opacity: 0; margin-top: 40px; transition: opacity 1s; }
-        
         .falling-heart { position: fixed; top: -10%; color: var(--primary-red); z-index: 1; animation: fall linear forwards; }
         @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
         
-        #video-holder { position: absolute; top: -1000px; left: -1000px; pointer-events: none; }
+        #video-holder { position: absolute; top: -1000px; left: -1000px; visibility: hidden; }
     </style>
 </head>
 <body>
@@ -55,7 +54,7 @@
 
     <div id="main-card">
         <h1>Hi Nama! ❤️</h1>
-        <p>I know you are my valentine.<br>I have a surprise for you!</p>
+        <p>I know you are my valentine.<br>Do you wanna come on a date with me?</p>
         <button class="btn-yes" onclick="startEverything()">Yes, I'd Love To!</button>
     </div>
 
@@ -85,19 +84,19 @@
 
     <script>
         function startEverything() {
-            // 1. Play Song (Direct Method)
-            const videoId = 'R6KvmB3XI-E';
-            const videoHolder = document.getElementById('video-holder');
-            videoHolder.innerHTML = `<iframe width="100" height="100" src="https://www.youtube.com/embed/${videoId}?autoplay=1&start=44&playsinline=1" allow="autoplay"></iframe>`;
-
-            // 2. Immediate UI Switch
+            // 1. Hide card, show stage
             document.getElementById('main-card').style.display = 'none';
             document.getElementById('stage').style.display = 'flex';
 
-            // 3. Animation Sequence
+            // 2. Play music
+            const videoId = 'R6KvmB3XI-E';
+            document.getElementById('video-holder').innerHTML = 
+                `<iframe width="100" height="100" src="https://www.youtube.com/embed/${videoId}?autoplay=1&start=44&playsinline=1" allow="autoplay"></iframe>`;
+
+            // 3. Show Hearts
             setTimeout(() => { 
                 document.getElementById('box1').classList.add('visible'); 
-            }, 500);
+            }, 300);
 
             setTimeout(() => {
                 const b2 = document.getElementById('box2');
@@ -109,7 +108,7 @@
                         startFallingHearts();
                     }, 1000);
                 }, 100);
-            }, 5500);
+            }, 5000);
         }
 
         function startFallingHearts() {
@@ -126,7 +125,3 @@
     </script>
 </body>
 </html>
-    </script>
-</body>
-</html>
-
